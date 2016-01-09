@@ -10,6 +10,7 @@ import fr.xephi.authme.events.AuthMeAsyncPreLoginEvent;
 import fr.xephi.authme.output.MessageKey;
 import fr.xephi.authme.output.Messages;
 import fr.xephi.authme.permission.AdminPermission;
+import fr.xephi.authme.permission.PlayerPermission;
 import fr.xephi.authme.permission.PlayerStatePermission;
 import fr.xephi.authme.security.RandomString;
 import fr.xephi.authme.settings.Settings;
@@ -224,8 +225,6 @@ public class AsynchronousLogin {
             return;
         }
         List<String> auths = this.database.getAllAuthsByName(auth);
-        // List<String> uuidlist =
-        // plugin.otherAccounts.getAllPlayersByUUID(player.getUniqueId());
         if (auths.isEmpty()) {
             return;
         }
@@ -233,8 +232,6 @@ public class AsynchronousLogin {
             return;
         }
         StringBuilder message = new StringBuilder("[AuthMe] ");
-        // String uuidaccounts =
-        // "[AuthMe] PlayerNames has %size% links to this UUID : ";
         int i = 0;
         for (String account : auths) {
             i++;
@@ -245,18 +242,13 @@ public class AsynchronousLogin {
                 message.append('.');
             }
         }
-        /*
-         * TODO: Active uuid system i = 0; for (String account : uuidlist) {
-         * i++; uuidaccounts = uuidaccounts + account; if (i != auths.size()) {
-         * uuidaccounts = uuidaccounts + ", "; } else { uuidaccounts =
-         * uuidaccounts + "."; } }
-         */
+
         for (Player player : Utils.getOnlinePlayers()) {
-            if (plugin.getPermissionsManager().hasPermission(player, AdminPermission.SEE_OTHER_ACCOUNTS)) {
+            if (plugin.getPermissionsManager().hasPermission(player, AdminPermission.SEE_OTHER_ACCOUNTS)
+                    || (player.getName().equals(this.player.getName())
+                            && plugin.getPermissionsManager().hasPermission(player, PlayerPermission.SEE_OWN_ACCOUNTS))) {
                 player.sendMessage("[AuthMe] The player " + auth.getNickname() + " has " + auths.size() + " accounts");
                 player.sendMessage(message.toString());
-                // player.sendMessage(uuidaccounts.replace("%size%",
-                // ""+uuidlist.size()));
             }
         }
     }

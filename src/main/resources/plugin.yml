@@ -139,6 +139,7 @@ permissions:
             authme.player.logout: true
             authme.player.register: true
             authme.player.unregister: true
+            authme.player.seeownaccounts: true
     authme.player.email:
         description: Gives access to player email commands
         default: false
@@ -187,4 +188,7 @@ permissions:
         default: false
     authme.bypassforcesurvival:
         description: Bypass all ForceSurvival features
+        default: false
+    authme.player.seeownaccounts:
+        description: Permission for user to see own other accounts.
         default: false
