@@ -40,7 +40,7 @@ import fr.xephi.authme.output.Log4JFilter;
 import fr.xephi.authme.output.MessageKey;
 import fr.xephi.authme.output.Messages;
 import fr.xephi.authme.permission.PermissionsManager;
-import fr.xephi.authme.permission.PlayerPermission;
+import fr.xephi.authme.permission.PlayerStatePermission;
 import fr.xephi.authme.process.Management;
 import fr.xephi.authme.security.HashAlgorithm;
 import fr.xephi.authme.security.PasswordSecurity;
@@ -749,7 +749,7 @@ public class AuthMe extends JavaPlugin {
     public Player generateKickPlayer(Collection<? extends Player> collection) {
         Player player = null;
         for (Player p : collection) {
-            if (!getPermissionsManager().hasPermission(p, PlayerPermission.IS_VIP)) {
+            if (!getPermissionsManager().hasPermission(p, PlayerStatePermission.IS_VIP)) {
                 player = p;
                 break;
             }
